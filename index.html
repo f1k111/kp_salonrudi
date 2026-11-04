@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- Pengaturan karakter agar teks bahasa Indonesia tampil normal -->
+    <meta charset="UTF-8">
+
+    <!-- Pengaturan viewport agar halaman responsif di HP dan laptop -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Judul tab browser -->
+    <title>Salon Rudi Sukabumi - Booking Customer</title>
+
+    <style>
+        /* Reset sederhana agar tampilan konsisten di berbagai browser */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Variabel warna utama sesuai panduan desain Salon Rudi */
+        :root {
+            --primary: #3093FB;
+            --accent: #0192FB;
+            --dark: #123B67;
+            --soft: #EAF4FF;
+            --white: #FFFFFF;
+            --text: #26384D;
+            --muted: #64748B;
+            --border: #CFE5FF;
+            --shadow: 0 18px 45px rgba(18, 59, 103, 0.14);
+        }
+
+        /* Pengaturan dasar body halaman */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: #F7FBFF;
+        }
+
+        /* Membuat scroll ketika klik menu navbar terasa halus */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Container utama agar konten tidak terlalu melebar di laptop */
+        .container {
+            width: min(1120px, 92%);
+            margin: 0 auto;
+        }
+
+        /* Navbar dibuat sticky agar menu tetap terlihat saat halaman discroll */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--dark);
+            color: var(--white);
+            box-shadow: 0 8px 24px rgba(18, 59, 103, 0.2);
+        }
+
+        /* Layout isi navbar: logo di kiri, menu di kanan */
+        .nav-content {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        /* Logo teks Salon Rudi */
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        /* Ikon logo sederhana berbentuk lingkaran dengan inisial SR */
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 800;
+            box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.18);
+        }
+
+        /* Daftar menu navigasi */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Link menu navbar */
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 8px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        /* Efek hover pada menu navbar */
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.13);
+        }
+
+        /* Tombol khusus Booking pada navbar */
+        .nav-menu .nav-cta {
+            background: var(--primary);
+        }
+
+        /* Hero section sebagai area sambutan utama customer */
+        .hero {
+            min-height: 620px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(115deg, rgba(18, 59, 103, 0.94), rgba(48, 147, 251, 0.76)),
+                radial-gradient(circle at 82% 24%, rgba(255, 255, 255, 0.35) 0 11%, transparent 12%),
+                radial-gradient(circle at 72% 58%, rgba(234, 244, 255, 0.45) 0 16%, transparent 17%),
+                #123B67;
+            color: var(--white);
+            overflow: hidden;
+        }
+
+        /* Grid hero untuk membagi teks dan panel informasi */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 46px;
+            padding: 72px 0;
+        }
+
+        /* Label kecil di atas judul hero */
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        /* Judul utama landing page */
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 4.6rem);
+            line-height: 1.06;
+            max-width: 760px;
+            margin-bottom: 18px;
+        }
+
+        /* Paragraf deskripsi di hero */
+        .hero p {
+            max-width: 650px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.08rem;
+            margin-bottom: 28px;
+        }
+
+        /* Wrapper tombol dan info singkat pada hero */
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
+        }
+
+        /* Gaya umum tombol */
+        .btn {
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        /* Tombol utama untuk booking */
+        .btn-primary {
+            background: var(--white);
+            color: var(--dark);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
+        }
+
+        /* Efek hover tombol */
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Teks status jam operasional pada hero */
+        .open-note {
+            color: rgba(255, 255, 255, 0.88);
+            font-weight: 600;
+        }
+
+        /* Panel visual di sisi kanan hero untuk menampilkan ringkasan booking */
+        .hero-panel {
+            background: rgba(255, 255, 255, 0.94);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* Gambar dekoratif berbasis CSS untuk menggambarkan suasana salon tanpa file tambahan */
+        .salon-visual {
+            min-height: 230px;
+            border-radius: 8px;
+            background:
+                linear-gradient(135deg, rgba(18, 59, 103, 0.12), rgba(48, 147, 251, 0.1)),
+                repeating-linear-gradient(90deg, rgba(18, 59, 103, 0.1) 0 2px, transparent 2px 28px),
+                var(--soft);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        /* Elemen cermin salon pada visual hero */
+        .salon-visual::before {
+            content: "";
+            position: absolute;
+            width: 44%;
+            height: 68%;
+            left: 10%;
+            top: 16%;
+            border-radius: 8px;
+            background: linear-gradient(150deg, #FFFFFF, #D7ECFF);
+            border: 8px solid #FFFFFF;
+            box-shadow: 0 18px 30px rgba(18, 59, 103, 0.16);
+        }
+
+        /* Elemen kursi salon pada visual hero */
+        .salon-visual::after {
+            content: "";
+            position: absolute;
+            width: 34%;
+            height: 30%;
+            right: 10%;
+            bottom: 18%;
+            border-radius: 8px 8px 18px 18px;
+            background: var(--dark);
+            box-shadow: 0 -52px 0 -22px var(--primary), 0 22px 0 -8px rgba(18, 59, 103, 0.22);
+        }
+
+        /* Grid statistik kecil di panel hero */
+        .quick-facts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        /* Kotak statistik kecil */
+        .fact {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        /* Angka pada statistik */
+        .fact strong {
+            display: block;
+            color: var(--dark);
+            font-size: 1.15rem;
+            line-height: 1.2;
+        }
+
+        /* Label statistik */
+        .fact span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-top: 3px;
+        }
+
+        /* Spasi umum antar section */
+        section {
+            padding: 76px 0;
+        }
+
+        /* Header tiap section */
+        .section-header {
+            max-width: 720px;
+            margin-bottom: 32px;
+        }
+
+        /* Label kecil section */
+        .section-label {
+            color: var(--primary);
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+            letter-spacing: 0;
+            margin-bottom: 8px;
+        }
+
+        /* Judul section */
+        .section-header h2 {
+            color: var(--dark);
+            font-size: clamp(1.7rem, 3vw, 2.6rem);
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        /* Deskripsi section */
+        .section-header p {
+            color: var(--muted);
+        }
+
+        /* Section tentang salon */
+        .about {
+            background: var(--white);
+        }
+
+        /* Layout informasi profil dan fasilitas */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        /* Kotak informasi umum */
+        .info-box {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        /* Judul kecil pada kotak informasi */
+        .info-box h3 {
+            color: var(--dark);
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+        }
+
+        /* List fasilitas dibuat rapi dengan tanda centang */
+        .check-list {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        /* Item fasilitas */
+        .check-list li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        /* Tanda centang fasilitas */
+        .check-list li::before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        /* Section layanan dengan background terang */
+        .services {
+            background: #F7FBFF;
+        }
+
+        /* Grid kartu layanan */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        /* Kartu layanan treatment */
+        .service-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 10px 28px rgba(18, 59, 103, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* Efek hover kartu layanan */
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Ikon kecil pada kartu layanan */
+        .service-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            color: var(--white);
+            background: var(--primary);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        /* Nama layanan */
+        .service-card h3 {
+            color: var(--dark);
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+
+        /* Estimasi waktu layanan */
+        .duration {
+            display: inline-block;
+            color: var(--primary);
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 0.86rem;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        /* Section booking */
+        .booking {
+            background: var(--white);
+        }
+
+        /* Layout form booking dan informasi operasional */
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        /* Panel informasi operasional */
+        .booking-info {
+            background: var(--dark);
+            color: var(--white);
+            border-radius: 8px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Judul panel booking info */
+        .booking-info h3 {
+            font-size: 1.45rem;
+            margin-bottom: 12px;
+        }
+
+        /* Teks panel booking info */
+        .booking-info p {
+            color: rgba(255, 255, 255, 0.86);
+            margin-bottom: 18px;
+        }
+
+        /* List aturan booking */
+        .booking-rules {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        /* Item aturan booking */
+        .booking-rules li {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        /* Form booking */
+        .booking-form {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 26px;
+        }
+
+        /* Grid input form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Grup label dan input */
+        .form-group {
+            display: grid;
+            gap: 8px;
+        }
+
+        /* Grup input yang melebar penuh */
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        /* Label input */
+        label {
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        /* Style input, select, dan textarea jika nanti dikembangkan */
+        input,
+        select {
+            width: 100%;
+            min-height: 48px;
+            border: 1px solid #B8D9FB;
+            border-radius: 8px;
+            padding: 12px 13px;
+            font: inherit;
+            color: var(--text);
+            background: var(--white);
+            outline: none;
+        }
+
+        /* Efek fokus input agar user tahu field sedang aktif */
+        input:focus,
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(48, 147, 251, 0.16);
+        }
+
+        /* Tombol submit form booking */
+        .submit-btn {
+            width: 100%;
+            margin-top: 18px;
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 12px 26px rgba(48, 147, 251, 0.24);
+        }
+
+        /* Catatan kecil di bawah form */
+        .form-note {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 14px;
+        }
+
+        /* Footer bagian bawah halaman */
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 38px 0;
+        }
+
+        /* Layout footer */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr;
+            gap: 24px;
+        }
+
+        /* Judul kecil footer */
+        .footer h3,
+        .footer h4 {
+            margin-bottom: 10px;
+        }
+
+        /* Teks footer */
+        .footer p,
+        .footer a {
+            color: rgba(255, 255, 255, 0.82);
+            text-decoration: none;
+        }
+
+        /* Link footer saat hover */
+        .footer a:hover {
+            color: var(--white);
+        }
+
+        /* Responsive tablet: kartu layanan menjadi dua kolom */
+        @media (max-width: 900px) {
+            .hero-grid,
+            .about-grid,
+            .booking-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero {
+                min-height: auto;
+            }
+        }
+
+        /* Responsive HP: menu dan form dibuat satu kolom */
+        @media (max-width: 640px) {
+            .nav-content {
+                min-height: auto;
+                padding: 14px 0;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-menu {
+                width: 100%;
+                justify-content: space-between;
+                gap: 4px;
+            }
+
+            .nav-menu a {
+                padding: 9px 8px;
+                font-size: 0.92rem;
+            }
+
+            .hero-grid {
+                padding: 54px 0;
+                gap: 28px;
+            }
+
+            section {
+                padding: 54px 0;
+            }
+
+            .service-grid,
+            .form-grid,
+            .quick-facts {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-form,
+            .booking-info,
+            .info-box,
+            .hero-panel {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar: berisi logo/nama salon dan menu navigasi -->
+    <header class="navbar">
+        <div class="container nav-content">
+            <!-- Logo sederhana Salon Rudi -->
+            <a href="#beranda" class="brand" aria-label="Salon Rudi Sukabumi">
+                <span class="brand-mark">SR</span>
+                <span>Salon Rudi Sukabumi</span>
+            </a>
+
+            <!-- Menu navigasi menuju section penting -->
+            <nav aria-label="Menu utama">
+                <ul class="nav-menu">
+                    <li><a href="#tentang">Tentang</a></li>
+                    <li><a href="#layanan">Layanan</a></li>
+                    <li><a class="nav-cta" href="#booking">Booking</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="beranda">
+        <!-- Hero Section: sambutan utama untuk customer -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <!-- Teks utama hero -->
+                <div>
+                    <div class="eyebrow">Booking Customer Salon Rudi</div>
+                    <h1>Tampil rapi dan percaya diri dengan layanan salon profesional.</h1>
+                    <p>
+                        Salon Rudi Sukabumi melayani haircut, styling, treatment, coloring,
+                        smoothing, keratin, manicure, dan pedicure dengan tenaga profesional
+                        didikan sekolah Rudi Hadisuwarno.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#booking">Booking Sekarang</a>
+                        <span class="open-note">Buka Rabu - Senin, 10:00 - 19:00</span>
+                    </div>
+                </div>
+
+                <!-- Panel visual ringkasan salon -->
+                <aside class="hero-panel" aria-label="Ringkasan Salon Rudi">
+                    <div class="salon-visual" aria-hidden="true"></div>
+                    <div class="quick-facts">
+                        <div class="fact">
+                            <strong>8</strong>
+                            <span>Karyawan</span>
+                        </div>
+                        <div class="fact">
+                            <strong>6-7</strong>
+                            <span>Kapasitas/jam</span>
+                        </div>
+                        <div class="fact">
+                            <strong>2018</strong>
+                            <span>Mulai berdiri</span>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Tentang Section: profil dan fasilitas salon -->
+        <section class="about" id="tentang">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Tentang Salon</div>
+                    <h2>Berpengalaman sejak Mei 2018 dan kini berkembang mandiri.</h2>
+                    <p>
+                        Salon Rudi berawal dari franchise Rudi Hadisuwarno, kemudian mandiri
+                        sejak Juli 2023 dengan tetap mengutamakan produk bagus, pelayanan rapi,
+                        dan tenaga profesional.
+                    </p>
+                </div>
+
+                <div class="about-grid">
+                    <!-- Kotak profil salon -->
+                    <article class="info-box">
+                        <h3>Profil Singkat</h3>
+                        <p>
+                            Saat ini Salon Rudi memiliki 8 karyawan yang terdiri dari 3 stylist,
+                            3 therapist, 1 kasir, dan 1 manager. Layanan customer dibuat nyaman
+                            untuk kebutuhan perawatan rambut dan kecantikan harian.
+                        </p>
+                    </article>
+
+                    <!-- Kotak fasilitas salon -->
+                    <article class="info-box">
+                        <h3>Fasilitas Customer</h3>
+                        <ul class="check-list">
+                            <li>Toilet khusus customer dan mushola.</li>
+                            <li>Ruangan treatment khusus wanita berhijab serta pria/wanita.</li>
+                            <li>Ruangan full AC, musik, dan free air mineral.</li>
+                            <li>Kapasitas maksimal sekitar 6-7 customer bersamaan dalam 1 jam.</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layanan Section: daftar treatment beserta estimasi waktu -->
+        <section class="services" id="layanan">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Daftar Layanan</div>
+                    <h2>Pilih treatment dan cek estimasi durasinya sebelum booking.</h2>
+                    <p>
+                        Estimasi waktu membantu customer memilih jam kedatangan yang sesuai
+                        dengan kebutuhan layanan.
+                    </p>
+                </div>
+
+                <!-- Grid kartu layanan -->
+                <div class="service-grid">
+                    <article class="service-card">
+                        <div class="service-icon">H</div>
+                        <h3>Haircut</h3>
+                        <p>Potong rambut oleh stylist profesional.</p>
+                        <span class="duration">45 menit</span>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">CS</div>
+                        <h3>Cuci Styling</h3>
+                        <p>Cuci rambut dan styling untuk tampilan lebih rapi.</p>
+                        <span class="duration">30-40 menit</span>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">T</div>
+                        <h3>Hair Treatment</h3>
+                        <p>Perawatan rambut agar lebih sehat dan mudah diatur.</p>
+                        <span class="duration">1.5 jam</span>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">C</div>
+                        <h3>Coloring</h3>
+                        <p>Pewarnaan rambut sesuai kebutuhan customer.</p>
+                        <span class="duration">2-4 jam</span>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">S</div>
+                        <h3>Smoothing</h3>
+                        <p>Perawatan untuk hasil rambut lebih lurus dan halus.</p>
+                        <span class="duration">4-5 jam</span>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">K</div>
+                        <h3>Keratin</h3>
+                        <p>Perawatan keratin untuk rambut lebih lembut dan berkilau.</p>
+                        <span class="duration">2-3 jam</span>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">M</div>
+                        <h3>Manicure</h3>
+                        <p>Perawatan kuku tangan agar tampak bersih dan rapi.</p>
+                        <span class="duration">30 menit</span>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">P</div>
+                        <h3>Pedicure</h3>
+                        <p>Perawatan kuku kaki untuk kenyamanan dan kebersihan.</p>
+                        <span class="duration">30 menit</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Section: form pemesanan customer -->
+        <section class="booking" id="booking">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Form Booking</div>
+                    <h2>Isi data pemesanan untuk simulasi booking awal.</h2>
+                    <p>
+                        Form ini masih berupa prototipe UI/UX. Data belum masuk database,
+                        tetapi sudah memiliki validasi jadwal tutup hari Selasa.
+                    </p>
+                </div>
+
+                <div class="booking-grid">
+                    <!-- Informasi operasional untuk membantu customer sebelum mengisi form -->
+                    <aside class="booking-info">
+                        <h3>Info Operasional</h3>
+                        <p>
+                            Salon buka setiap Rabu sampai Senin pukul 10:00 - 19:00.
+                            Salon tutup setiap hari Selasa.
+                        </p>
+                        <ul class="booking-rules">
+                            <li>Datang sesuai jam yang dipilih agar antrean lebih tertata.</li>
+                            <li>Untuk layanan durasi panjang, pilih jam lebih awal.</li>
+                            <li>Konfirmasi dapat dilanjutkan melalui WhatsApp salon.</li>
+                        </ul>
+                    </aside>
+
+                    <!-- Form booking sederhana -->
+                    <form class="booking-form" id="bookingForm">
+                        <div class="form-grid">
+                            <!-- Input nama customer -->
+                            <div class="form-group">
+                                <label for="nama">Nama Customer</label>
+                                <input type="text" id="nama" name="nama" placeholder="Contoh: Siti Aminah" required>
+                            </div>
+
+                            <!-- Input nomor WhatsApp customer -->
+                            <div class="form-group">
+                                <label for="wa">No WhatsApp</label>
+                                <input type="tel" id="wa" name="wa" placeholder="Contoh: 081234567890" required>
+                            </div>
+
+                            <!-- Dropdown pilihan treatment -->
+                            <div class="form-group full">
+                                <label for="treatment">Pilihan Treatment</label>
+                                <select id="treatment" name="treatment" required>
+                                    <option value="">-- Pilih layanan --</option>
+                                    <option value="Haircut - 45 menit">Haircut - 45 menit</option>
+                                    <option value="Cuci Styling - 30-40 menit">Cuci Styling - 30-40 menit</option>
+                                    <option value="Hair Treatment - 1.5 jam">Hair Treatment - 1.5 jam</option>
+                                    <option value="Coloring - 2-4 jam">Coloring - 2-4 jam</option>
+                                    <option value="Smoothing - 4-5 jam">Smoothing - 4-5 jam</option>
+                                    <option value="Keratin - 2-3 jam">Keratin - 2-3 jam</option>
+                                    <option value="Manicure - 30 menit">Manicure - 30 menit</option>
+                                    <option value="Pedicure - 30 menit">Pedicure - 30 menit</option>
+                                </select>
+                            </div>
+
+                            <!-- Input tanggal booking -->
+                            <div class="form-group">
+                                <label for="tanggal">Tanggal Booking</label>
+                                <input type="date" id="tanggal" name="tanggal" required>
+                            </div>
+
+                            <!-- Input jam booking dengan batas jam operasional -->
+                            <div class="form-group">
+                                <label for="jam">Jam Booking</label>
+                                <input type="time" id="jam" name="jam" min="10:00" max="19:00" required>
+                            </div>
+                        </div>
+
+                        <!-- Tombol submit untuk menjalankan validasi JavaScript -->
+                        <button type="submit" class="btn submit-btn">Kirim Booking</button>
+
+                        <!-- Catatan prototipe -->
+                        <p class="form-note">
+                            Catatan: ini prototipe landing page customer. Submit hanya menampilkan alert sukses.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer: alamat, patokan, jam buka, dan kontak -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <h3>Salon Rudi Sukabumi</h3>
+                <p>Jl. Surya Kencana No 38 Kel Cikole Kec Cikole, Sukabumi.</p>
+                <p>Patokan: Samping kantor Biznet Sukabumi.</p>
+            </div>
+
+            <div>
+                <h4>Jam Buka</h4>
+                <p>Rabu - Senin</p>
+                <p>10:00 - 19:00</p>
+                <p>Tutup setiap Selasa</p>
+            </div>
+
+            <div>
+                <h4>Kontak</h4>
+                <p>WA: <a href="https://wa.me/6289636398894">089636398894</a></p>
+                <p>WA: <a href="https://wa.me/628118880342">08118880342</a></p>
+                <p>IG: <a href="https://www.instagram.com/rudi_salon_sukabumi">rudi_salon_sukabumi</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mengambil elemen form booking berdasarkan id
+        const bookingForm = document.getElementById("bookingForm");
+
+        // Mengambil elemen input tanggal untuk validasi hari Selasa
+        const tanggalInput = document.getElementById("tanggal");
+
+        // Mengambil elemen input jam agar bisa dicek sesuai jam operasional
+        const jamInput = document.getElementById("jam");
+
+        // Fungsi untuk mengecek apakah tanggal yang dipilih adalah hari Selasa
+        function isHariSelasa(tanggalValue) {
+            // Membuat objek Date dari value input tanggal dengan tambahan jam lokal
+            const tanggal = new Date(tanggalValue + "T00:00:00");
+
+            // getDay() menghasilkan angka: 0 Minggu, 1 Senin, 2 Selasa, dst.
+            return tanggal.getDay() === 2;
+        }
+
+        // Fungsi untuk mengecek apakah jam booking berada dalam jam operasional
+        function isJamOperasional(jamValue) {
+            // Valid jika jam berada di antara pukul 10:00 sampai 19:00
+            return jamValue >= "10:00" && jamValue <= "19:00";
+        }
+
+        // Event submit form untuk menjalankan validasi dan alert sukses
+        bookingForm.addEventListener("submit", function (event) {
+            // Mencegah form melakukan reload halaman
+            event.preventDefault();
+
+            // Mengambil nilai dari setiap input form
+            const nama = document.getElementById("nama").value.trim();
+            const wa = document.getElementById("wa").value.trim();
+            const treatment = document.getElementById("treatment").value;
+            const tanggal = tanggalInput.value;
+            const jam = jamInput.value;
+
+            // Validasi tambahan jika ada data kosong
+            if (!nama || !wa || !treatment || !tanggal || !jam) {
+                alert("Mohon lengkapi semua data booking terlebih dahulu.");
+                return;
+            }
+
+            // Validasi khusus: salon tutup setiap hari Selasa
+            if (isHariSelasa(tanggal)) {
+                alert("Maaf, Salon tutup setiap hari Selasa. Silakan pilih tanggal lain.");
+                return;
+            }
+
+            // Validasi jam operasional salon
+            if (!isJamOperasional(jam)) {
+                alert("Maaf, jam booking harus berada di antara pukul 10:00 - 19:00.");
+                return;
+            }
+
+            // Alert sukses sebagai simulasi booking tanpa database
+            alert(
+                "Booking berhasil!\n\n" +
+                "Nama: " + nama + "\n" +
+                "No WA: " + wa + "\n" +
+                "Treatment: " + treatment + "\n" +
+                "Tanggal: " + tanggal + "\n" +
+                "Jam: " + jam + "\n\n" +
+                "Tim Salon Rudi akan menghubungi Anda untuk konfirmasi."
+            );
+
+            // Mengosongkan form setelah alert sukses
+            bookingForm.reset();
+        });
+
+        // Event change pada tanggal agar user langsung tahu jika memilih hari Selasa
+        tanggalInput.addEventListener("change", function () {
+            // Jika tanggal yang dipilih adalah Selasa, tampilkan alert peringatan
+            if (tanggalInput.value && isHariSelasa(tanggalInput.value)) {
+                alert("Maaf, Salon tutup setiap hari Selasa");
+                tanggalInput.value = "";
+            }
+        });
+    </script>
+</body>
+</html>
